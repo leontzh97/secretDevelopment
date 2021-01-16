@@ -28,13 +28,29 @@ export function Me({ navigation }) {
         </Text>
       </View>
       <View style={styles.footer}>
+      <TouchableOpacity onPress={() => alert('Password page')}>
+        <View style={[styles.button,{borderTopWidth:1}]}>
+          <Text style={styles.buttonText}>
+            <MaterialCommunityIcons name="security" size={20} color="white"/>
+            Change Password
+          </Text>
+        </View>
+      </TouchableOpacity>
+        <TouchableOpacity onPress={() => alert('Membership page')}>
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>
+              <MaterialCommunityIcons name="account" size={20} color="white"/>
+              Membership
+            </Text>
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Login', {
           screen: 'Login'
         })}>
           <View style={styles.button}>
             <Text style={styles.buttonText}>
               <MaterialCommunityIcons name="logout" size={20} color="white"/>
-              LOGOUT
+              Logout
             </Text>
           </View>
         </TouchableOpacity>
@@ -62,7 +78,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius:30,
     paddingVertical:50,
-    paddingHorizontal:30
+    paddingHorizontal:10
   },
   logo:{
     width: height_logo,
@@ -86,7 +102,6 @@ const styles = StyleSheet.create({
    alignItems: 'flex-start',
    justifyContent: 'center',
    borderColor:'white',
-   borderTopWidth:1,
    borderBottomWidth:1,
  },
  buttonText: {

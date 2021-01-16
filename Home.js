@@ -14,7 +14,7 @@ function MyTabs() {
       initialRouteName="MySubscriptions"
       activeColor="white"
       labelStyle={{ fontSize: 12 }}
-      barStyle={{backgroundColor: "red"}}
+      barStyle={{backgroundColor: "#b22222"}}
     >
       <Tab.Screen
         name="MySubscriptions"

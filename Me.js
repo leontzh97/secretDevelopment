@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   footer:{
     flex:2,
-    backgroundColor: 'red',
+    backgroundColor: '#b22222',
     borderTopLeftRadius: 30,
     borderTopRightRadius:30,
     paddingVertical:50,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   personalDetails:{
     fontSize: 20,
-    fontWeight:'Bold',
+    fontWeight:'bold',
   },
   button: {
    alignItems: 'flex-start',

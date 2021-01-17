@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MySubscriptions } from './MySubscriptions';
 import { Me } from './Me';
 import { LoginScreen } from './Login';
+import { ClassDetailScreen } from './classes/classDetails';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -47,6 +48,16 @@ export function MyStack() {
     <Stack.Navigator>
       <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
       <Stack.Screen name="MyTabs" component={MyTabs} options={{headerShown: false}} />
+      <Stack.Screen
+        name="ClassDetailScreen"
+        component={ClassDetailScreen}
+        options={({ route }) => ({
+          title: route.params.name,
+          headerStyle: route.params.style,
+          headerTintColor: route.params.tintColor,
+          headerTitleStyle: route.params.titleStyle,
+        })}
+        />
     </Stack.Navigator>
   );
 }

@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import {
-  Alert,
   ScrollView,
   StyleSheet,
   View,
   Text,
+  StatusBar,
 } from 'react-native';
-import {
-  Card,
-  Icon,
-} from 'react-native-elements';
+import { Card } from 'react-native-elements';
 import CardMedia from 'react-native-card-media';
 
 const path = 'https://raw.githubusercontent.com/dondoko-susumu/react-native-card-media-example/master/media/';
@@ -29,23 +26,41 @@ const files3 = [
 ];
 
 export class MySubscriptions extends Component<{}> {
+  constructor(props){
+        super(props);
 
-  onPress() {
-    Alert.alert('onPress');
+        this.state = {
+          navigation: props.navigation
+        };
+    };
+
+  onPress(title, classAmount) {
+    this.state.navigation.navigate('ClassDetailScreen',{
+      screen:'ClassDetailScreen',
+      classAmount: classAmount,
+      name:title,
+      style:  {
+        backgroundColor: '#b22222',
+      },
+      tintColor: '#fff',
+      titleStyle: {
+        fontWeight: 'bold',
+      },
+    })
   }
 
   render() {
     return (
-      <View style={styles.scene}>
         <ScrollView>
           <View style={styles.container}>
+            <StatusBar barStyle="light-content" />
             <Card>
               <CardMedia
                 style={{ height: 200 }}
                 title="Elementary Class"
-                titleStyle={{ fontSize: 24, fontWeight: '400', lineHeight: 32, color: '#fafafa' }}
+                titleStyle={styles.cardTitle}
                 files={files1}
-                onPress={() => this.onPress()}
+                onPress={() => this.onPress("Elementary",3)}
               />
               <Card.Divider style={styles.cardStyle}>
                 <Text>
@@ -57,9 +72,9 @@ export class MySubscriptions extends Component<{}> {
               <CardMedia
                 style={{ height: 200 }}
                 title="Intermediate Class"
-                titleStyle={{ fontSize: 24, fontWeight: '400', lineHeight: 32, color: '#fafafa' }}
+                titleStyle={styles.cardTitle}
                 files={files2}
-                onPress={() => this.onPress()}
+                onPress={() => this.onPress("Intermediate",5)}
               />
               <Card.Divider style={styles.cardStyle}>
                 <Text>
@@ -71,9 +86,9 @@ export class MySubscriptions extends Component<{}> {
               <CardMedia
                 style={{ height: 200 }}
                 title="Advance Class"
-                titleStyle={{ fontSize: 24, fontWeight: '400', lineHeight: 32, color: '#fafafa' }}
+                titleStyle={styles.cardTitle}
                 files={files3}
-                onPress={() => this.onPress()}
+                onPress={() => this.onPress("Advance",7)}
               />
               <Card.Divider style={styles.cardStyle}>
                 <Text>
@@ -83,15 +98,11 @@ export class MySubscriptions extends Component<{}> {
             </Card>
           </View>
         </ScrollView>
-      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  scene: {
-    marginTop: 30,
-  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -101,4 +112,10 @@ const styles = StyleSheet.create({
   cardStyle: {
     width: 320,
   },
+  cardTitle: {
+    fontSize: 24,
+    fontWeight: '400',
+    lineHeight: 32,
+    color: '#fafafa'
+  }
 });

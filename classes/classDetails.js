@@ -19,9 +19,24 @@ export class ClassDetailScreen extends Component<{}> {
         super(props);
 
         this.state = {
-          classAmount: props.route.params.classAmount
+          classAmount: props.route.params.classAmount,
+          navigation: props.navigation
         }
   };
+
+  onPress(title) {
+    this.state.navigation.navigate('ClassVideoScreen',{
+      screen:'ClassVideoScreen',
+      name:title,
+      style:  {
+        backgroundColor: '#b22222',
+      },
+      tintColor: '#fff',
+      titleStyle: {
+        fontWeight: 'bold',
+      },
+    })
+  }
 
   renderClass() {
     const classAmount = this.state.classAmount;
@@ -29,13 +44,13 @@ export class ClassDetailScreen extends Component<{}> {
     for (let i=0; i < classAmount; i++) {
         let num = i+1;
         fields.push(
-          <Card>
+          <Card key={i}>
             <CardMedia
               style={{ height: 200 }}
               title={"Class " + num}
               titleStyle={styles.cardTitle}
               files={files1}
-              onPress={() => alert('hi')}
+              onPress={() => this.onPress("Class " + num)}
             />
             <Card.Divider style={styles.cardStyle}>
               <Text>

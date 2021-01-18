@@ -6,6 +6,7 @@ import { MySubscriptions } from './MySubscriptions';
 import { Me } from './Me';
 import { LoginScreen } from './Login';
 import { ClassDetailScreen } from './classes/classDetails';
+import { ClassVideoScreen } from './classes/classVideo';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -58,6 +59,16 @@ export function MyStack() {
           headerTitleStyle: route.params.titleStyle,
         })}
         />
+        <Stack.Screen
+          name="ClassVideoScreen"
+          component={ClassVideoScreen}
+          options={({ route }) => ({
+            title: route.params.name,
+            headerStyle: route.params.style,
+            headerTintColor: route.params.tintColor,
+            headerTitleStyle: route.params.titleStyle,
+          })}
+          />
     </Stack.Navigator>
   );
 }

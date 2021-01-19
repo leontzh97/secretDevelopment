@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Button,
@@ -10,53 +10,75 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export function Me({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableHighlight
-            style={styles.logoImgContainer}>
-          <Image
-          source={require('./assets/unknown.png')}
-          style={styles.logo}
-          resizeMode="contain"
-          />
-        </TouchableHighlight>
-        <Text style={styles.personalDetails}>
-          My Name
-        </Text>
-      </View>
-      <View style={styles.footer}>
-      <TouchableOpacity onPress={() => alert('Password page')}>
-        <View style={[styles.button,{borderTopWidth:1}]}>
-          <Text style={styles.buttonText}>
-            <MaterialCommunityIcons name="security" size={20} color="white"/>
-            Change Password
+export class Me extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      navigation: props.navigation,
+      user: {},
+    }
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('user').then((user) => {
+      this.setState({
+        user: JSON.parse(user)
+      });
+    });
+  }
+
+  render(){
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableHighlight
+              style={styles.logoImgContainer}>
+            <Image
+            source={require('./assets/unknown.png')}
+            style={styles.logo}
+            resizeMode="contain"
+            />
+          </TouchableHighlight>
+          <Text style={styles.personalDetails}>
+            {this.state.user.name}
           </Text>
         </View>
-      </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert('Membership page')}>
-          <View style={styles.button}>
+        <View style={styles.footer}>
+        <TouchableOpacity onPress={() => alert('Password page')}>
+          <View style={[styles.button,{borderTopWidth:1}]}>
             <Text style={styles.buttonText}>
-              <MaterialCommunityIcons name="account" size={20} color="white"/>
-              Membership
+              <MaterialCommunityIcons name="security" size={20} color="white"/>
+              Change Password
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Login', {
-          screen: 'Login'
-        })}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>
-              <MaterialCommunityIcons name="logout" size={20} color="white"/>
-              Logout
-            </Text>
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => alert('Membership page')}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>
+                <MaterialCommunityIcons name="account" size={20} color="white"/>
+                Membership
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.state.navigation.navigate('GoogleLogin', {
+            screen: 'GoogleLogin'
+          })}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>
+                <MaterialCommunityIcons name="logout" size={20} color="white"/>
+                Logout
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
+
 }
 
 const {height} = Dimensions.get("screen");

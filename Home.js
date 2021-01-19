@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MySubscriptions } from './MySubscriptions';
 import { Me } from './Me';
 import { LoginScreen } from './Login';
+import { GoogleLogin } from './GoogleLogin';
 import { ClassDetailScreen } from './classes/classDetails';
 import { ClassVideoScreen } from './classes/classVideo';
 
@@ -47,7 +48,7 @@ const Stack = createStackNavigator();
 export function MyStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
+      <Stack.Screen name="GoogleLogin" component={GoogleLogin} options={{headerShown: false}} />
       <Stack.Screen name="MyTabs" component={MyTabs} options={{headerShown: false}} />
       <Stack.Screen
         name="ClassDetailScreen"

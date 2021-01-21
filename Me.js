@@ -10,7 +10,10 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as Google from 'expo-google-app-auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const CREDENTIALS = require('./Credentials.json');
 
 export class Me extends Component {
 
@@ -20,15 +23,47 @@ export class Me extends Component {
     this.state = {
       navigation: props.navigation,
       user: {},
+      accessToken: '',
     }
   }
 
   componentDidMount() {
     AsyncStorage.getItem('user').then((user) => {
       this.setState({
-        user: JSON.parse(user)
+        user: JSON.parse(user),
       });
     });
+    AsyncStorage.getItem('accessToken').then((token) => {
+      this.setState({
+        accessToken: token
+      });
+    });
+  }
+
+  signOutWithGoogleAsync = async() => {
+    try {
+      let token = this.state.accessToken;
+      const result = await Google.logOutAsync({
+        androidClientId: CREDENTIALS.credentials.androidClientId,
+        iosClientId: CREDENTIALS.credentials.iosClientId,
+        accessToken: token,
+      });
+
+      if (result.status === 200) {
+        try{
+          AsyncStorage.getAllKeys().then(keys => AsyncStorage.multiRemove(keys));
+          this.state.navigation.navigate('GoogleLogin', {
+            screen: 'GoogleLogin'
+          });
+        } catch(e){
+          console.warn(e.message);
+        }
+      } else {
+        console.warn(result);
+      }
+    } catch (e) {
+      return { error: true };
+    }
   }
 
   render(){
@@ -38,13 +73,13 @@ export class Me extends Component {
           <TouchableHighlight
               style={styles.logoImgContainer}>
             <Image
-            source={require('./assets/unknown.png')}
+            source={this.state.user === null ? require('./assets/unknown.png') : {uri: this.state.user.photoUrl}}
             style={styles.logo}
             resizeMode="contain"
             />
           </TouchableHighlight>
           <Text style={styles.personalDetails}>
-            {this.state.user.name}
+            {this.state.user === null ? 'Guest' : this.state.user.name}
           </Text>
         </View>
         <View style={styles.footer}>
@@ -64,9 +99,9 @@ export class Me extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.state.navigation.navigate('GoogleLogin', {
+          <TouchableOpacity onPress={() => this.state.accessToken === null ? this.state.navigation.navigate('GoogleLogin', {
             screen: 'GoogleLogin'
-          })}>
+          }) : this.signOutWithGoogleAsync()}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>
                 <MaterialCommunityIcons name="logout" size={20} color="white"/>
@@ -108,10 +143,11 @@ const styles = StyleSheet.create({
     borderRadius:60
   },
   logoImgContainer: {
-    marginLeft: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
     height: height_logo,
     width: height_logo,
-    borderRadius: 60,
+    borderRadius:60,
     overflow:'hidden',
     borderColor: 'black',
     borderWidth:2

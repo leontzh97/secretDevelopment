@@ -9,15 +9,16 @@ import {
 import * as Google from 'expo-google-app-auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const credentials = require('./Credentials.json');
+const CREDENTIALS = require('./Credentials.json');
 
 export class GoogleLogin extends Component{
   constructor(props){
     super(props);
 
     this.state = {
+      navigation: props.navigation,
       user: {},
-      accessToken: 'no token',
+      accessToken: '',
       loaded: false
     }
   }
@@ -25,9 +26,9 @@ export class GoogleLogin extends Component{
   signInWithGoogleAsync = async() => {
     try {
       const result = await Google.logInAsync({
-        androidClientId: credentials.credentials.androidClientId,
-        iosClientId: credentials.credentials.iosClientId,
-        scopes: ['profile', 'email'],
+        androidClientId: CREDENTIALS.credentials.androidClientId,
+        iosClientId: CREDENTIALS.credentials.iosClientId,
+        scopes: ['profile', 'email'], //The scopes to ask for from Google for this login
       });
 
       if (result.type === 'success') {
@@ -57,6 +58,13 @@ export class GoogleLogin extends Component{
           style={styles.loginBtn}
           onPress={() => this.signInWithGoogleAsync()}>
           <Text style={styles.loginText}>GOOGLE LOGIN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.loginBtn}
+          onPress={() => this.state.navigation.navigate('MyTabs', {
+            screen: 'MyTabs'
+          })}>
+          <Text style={styles.loginText}>GUEST LOGIN</Text>
         </TouchableOpacity>
       </View>
     )

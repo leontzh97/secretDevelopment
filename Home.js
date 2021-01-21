@@ -4,10 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MySubscriptions } from './MySubscriptions';
 import { Me } from './Me';
-import { LoginScreen } from './Login';
 import { GoogleLogin } from './GoogleLogin';
 import { ClassDetailScreen } from './classes/classDetails';
 import { ClassVideoScreen } from './classes/classVideo';
+import { LeaveFormScreen } from './hands2/LeaveForm';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -19,6 +19,16 @@ function MyTabs() {
       labelStyle={{ fontSize: 12 }}
       barStyle={{backgroundColor: "#b22222"}}
     >
+      <Tab.Screen
+        name="LeaveFormScreen"
+        component={LeaveFormScreen}
+        options={{
+          tabBarLabel: 'Hands2',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="youtube-subscription" color={color} size={26} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="MySubscriptions"
         component={MySubscriptions}

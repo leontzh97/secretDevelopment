@@ -1,5 +1,6 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MySubscriptions } from './MySubscriptions';
@@ -8,8 +9,25 @@ import { GoogleLogin } from './GoogleLogin';
 import { ClassDetailScreen } from './classes/classDetails';
 import { ClassVideoScreen } from './classes/classVideo';
 import { LeaveFormScreen } from './hands2/LeaveForm';
+import { LeaveDisplayScreen } from './hands2/LeaveDisplay';
 
 const Tab = createMaterialBottomTabNavigator();
+const TopTab = createMaterialTopTabNavigator();
+
+function MyTopTabs() {
+  return (
+    <TopTab.Navigator
+      initialRouteName="LeaveFormScreen"
+    >
+      <TopTab.Screen name="LeaveFormScreen" component={LeaveFormScreen} options={{
+        tabBarLabel: 'Leave Application',
+      }}/>
+      <TopTab.Screen name="LeaveDisplyScreen" component={LeaveDisplayScreen} options={{
+        tabBarLabel: 'Leave Submission',
+      }}/>
+    </TopTab.Navigator>
+  );
+}
 
 function MyTabs() {
   return (
@@ -20,8 +38,8 @@ function MyTabs() {
       barStyle={{backgroundColor: "#b22222"}}
     >
       <Tab.Screen
-        name="LeaveFormScreen"
-        component={LeaveFormScreen}
+        name="MyTopTabs"
+        component={MyTopTabs}
         options={{
           tabBarLabel: 'Hands2',
           tabBarIcon: ({ color }) => (

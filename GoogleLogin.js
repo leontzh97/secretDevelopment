@@ -28,7 +28,10 @@ export class GoogleLogin extends Component{
       const result = await Google.logInAsync({
         androidClientId: CREDENTIALS.credentials.androidClientId,
         iosClientId: CREDENTIALS.credentials.iosClientId,
-        scopes: ['profile', 'email'], //The scopes to ask for from Google for this login
+        scopes: [
+          'profile',
+          'email',
+        ], //The scopes to ask for from Google for this login
       });
 
       if (result.type === 'success') {

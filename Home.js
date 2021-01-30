@@ -22,9 +22,9 @@ function MyTopTabs() {
       <TopTab.Screen name="LeaveFormScreen" component={LeaveFormScreen} options={{
         tabBarLabel: 'Leave Application',
       }}/>
-      <TopTab.Screen name="LeaveDisplyScreen" component={LeaveDisplayScreen} options={{
-        tabBarLabel: 'Leave Submission',
-      }}/>
+      <TopTab.Screen name="LeaveDisplayScreen" component={LeaveDisplayScreen} options={
+        {tabBarLabel: 'Leave Submission'}
+      } />
     </TopTab.Navigator>
   );
 }
@@ -40,12 +40,16 @@ function MyTabs() {
       <Tab.Screen
         name="MyTopTabs"
         component={MyTopTabs}
-        options={{
-          tabBarLabel: 'Hands2',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="youtube-subscription" color={color} size={26} />
-          ),
-        }}
+        options={({route}) => (
+          {
+            tabBarLabel: 'Hands2',
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="hand-peace" color={color} size={26} />
+            ),
+            route: {route}
+          }
+        )}
+        initialParams={{dates: [], times: [], reasons: []}}
       />
       <Tab.Screen
         name="MySubscriptions"

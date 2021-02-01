@@ -3,7 +3,6 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MySubscriptions } from './MySubscriptions';
 import { Me } from './Me';
 import { GoogleLogin } from './GoogleLogin';
 import { ClassDetailScreen } from './classes/classDetails';
@@ -32,7 +31,7 @@ function MyTopTabs() {
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="MySubscriptions"
+      initialRouteName="MyTopTabs"
       activeColor="white"
       labelStyle={{ fontSize: 12 }}
       barStyle={{backgroundColor: "#b22222"}}
@@ -40,24 +39,10 @@ function MyTabs() {
       <Tab.Screen
         name="MyTopTabs"
         component={MyTopTabs}
-        options={({route}) => (
-          {
-            tabBarLabel: 'Hands2',
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="hand-peace" color={color} size={26} />
-            ),
-            route: {route}
-          }
-        )}
-        initialParams={{dates: [], times: [], reasons: []}}
-      />
-      <Tab.Screen
-        name="MySubscriptions"
-        component={MySubscriptions}
         options={{
-          tabBarLabel: 'My Subscriptions',
+          tabBarLabel: 'Hands2',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="youtube-subscription" color={color} size={26} />
+            <MaterialCommunityIcons name="hand-peace" color={color} size={26} />
           ),
         }}
       />

@@ -7,21 +7,14 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 
 export function LeaveDisplayScreen(){
 
   const [refreshing, setRefreshing] = useState(false);
 
-  useFocusEffect(
-    useCallback(() => {
-      // Do something when the screen is focused
-      return () => {
-        // Do something when the screen is unfocused
-        // Useful for cleanup functions
-      };
-    }, [])
-  )
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+  }, []);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -43,7 +36,7 @@ export function LeaveDisplayScreen(){
         }
       >
       <View>
-        <Text>Display Screen</Text>
+        <Text>My Applied Leave History</Text>
       </View>
     </ScrollView>
   </View>
@@ -56,32 +49,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  DateTimeInput: {
-    height: 40,
-    width: Dimensions.get('screen').width/2.8,
-    borderColor: 'black',
-    borderWidth: 1,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    padding: 5,
-    margin: 5,
-    color: 'black'
-  },
-  ReasonInput: {
-    height: 80,
-    width: Dimensions.get('screen').width/1.35,
-    borderColor: 'black',
-    borderWidth: 1,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    padding: 5,
-    marginLeft:18,
-    margin: 5,
-    color: 'black'
-  },
+  }
 })

@@ -20,13 +20,22 @@ const CREDENTIALS = require('../Credentials.json');
 
 export function LeaveFormScreen({ navigation }){
 
+  const initialStates = {
+    dates: [new Date()],
+    times: [new Date()],
+    form: 0,
+    reasons: [],
+    days: 1,
+    showForm: false
+  }
+
   const [dates, setDates] = useState([new Date()]);
   const [times, setTimes] = useState([new Date()]);
   const [mode, setMode] = useState('date');
   const [shows, setShows] = useState([false, false]);
   const [form, setForm] = useState(0);
   const [reasons, setReasons] = useState([]);
-  const [days, setDays] = useState(0);
+  const [days, setDays] = useState(1);
   const [showForm, setShowForm] = useState(false);
   const [user, setUser] = useState([]);
 
@@ -93,8 +102,17 @@ export function LeaveFormScreen({ navigation }){
     if(reasons[form] == null || reasons[form] == "" ){
       alert('Please state your reason correctly')
     }else{
-      if(form + 1 > days){
+      if(form == days - 1){
         setShowForm(false)
+        setForm(form + 1);
+        setDates({
+          ...dates,
+          [form + 1]: new Date(),
+        });
+        setTimes({
+          ...times,
+          [form + 1]: new Date(),
+        });
       }
       else{
         setForm(form + 1);
@@ -109,7 +127,7 @@ export function LeaveFormScreen({ navigation }){
       }
     }
   }
-  console.warn(dates)
+
   const submitForm = () => {
     let d = [];
     let r = [];
@@ -138,11 +156,19 @@ export function LeaveFormScreen({ navigation }){
       .then(async response => {
         const data = await response.json();
 
-        if(!response.ok){
+        if(response.ok){
+          setDays(initialStates.days);
+          setForm(initialStates.form);
+          setShowForm(initialStates.showForm);
+          setDates(initialStates.dates);
+          setTimes(initialStates.times);
+          setReasons(initialStates.reasons);
+
+          alert('Leave Applied! Please check at your history!');
+        }else{
           const error = (data && data.message) || response.status;
           return Promise.reject(error);
         }
-        alert('Leave Applied! Please check at your history!');
       })
     }catch(e){
       alert(e.message)
@@ -262,7 +288,7 @@ export function LeaveFormScreen({ navigation }){
                 />
                 </View>
                 <View style={styles.footer}>
-                  { form + 1 > days ? (
+                  { form == days - 1 ? (
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={addForm}
@@ -304,17 +330,19 @@ export function LeaveFormScreen({ navigation }){
             )}
         </View>
         {/*Display Form View*/}
-        <View style={styles.action}>
-          <Text style={styles.title}>Applied Leave</Text>
-            {reasons[0] == null ? (<Text>no data</Text>) : renderClass()}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={submitForm}
-              style={styles.appButtonContainer}
-            >
-              <Text style={[styles.appButtonText,{width: Dimensions.get('screen').width/1.13}]}>Submit</Text>
-            </TouchableOpacity>
-        </View>
+        {form == 0 ? (<View></View>):
+          <View style={styles.action}>
+            <Text style={styles.title}>Applied Leave</Text>
+              {renderClass()}
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={submitForm}
+                style={styles.appButtonContainer}
+              >
+                <Text style={[styles.appButtonText,{width: Dimensions.get('screen').width/1.13}]}>Submit</Text>
+              </TouchableOpacity>
+          </View>
+        }
       </ScrollView>
     </View>
   );

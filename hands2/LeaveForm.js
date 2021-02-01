@@ -16,6 +16,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+const CREDENTIALS = require('../Credentials.json');
+
 export function LeaveFormScreen({ navigation }){
 
   const [dates, setDates] = useState([new Date()]);
@@ -26,6 +28,17 @@ export function LeaveFormScreen({ navigation }){
   const [reasons, setReasons] = useState([]);
   const [days, setDays] = useState(0);
   const [showForm, setShowForm] = useState(false);
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    try{
+      AsyncStorage.getItem('user').then((user) => {
+        setUser(JSON.parse(user));
+      });
+    }catch(e){
+      alert(e.message)
+    }
+  }, []); // <-- Have to pass in [] here!
 
   const onChange1 = (event, selectedDate) => {
     const currentDate = selectedDate || dates[form];
@@ -95,7 +108,45 @@ export function LeaveFormScreen({ navigation }){
         });
       }
     }
+  }
+  console.warn(dates)
+  const submitForm = () => {
+    let d = [];
+    let r = [];
+    let t = [];
+    let u = [];
+    for( let i = 0; i < form; i++){
+      u[i] = user.name
+      d[i] = dates[i];
+      t[i] = dates[i].toLocaleTimeString().slice(0,5) + ' - ' + times[i].toLocaleTimeString().slice(0,5);
+      r[i] = reasons[i];
+    }
+    try{
+      fetch(CREDENTIALS.API.link,{
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          Name: u,
+          Date: d,
+          Time: t,
+          Reason: r
+        })
+      })
+      .then(async response => {
+        const data = await response.json();
 
+        if(!response.ok){
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+        alert('Leave Applied! Please check at your history!');
+      })
+    }catch(e){
+      alert(e.message)
+    }
   }
 
   const renderClass = () => {
@@ -206,7 +257,7 @@ export function LeaveFormScreen({ navigation }){
                   multiline
                   maxLength={40}
                   placeholder="State your reasons here..."
-                  onChangeText={text => setReasons({...reasons, [form]:text})}
+                  onChangeText={text => setReasons({...reasons, [form]: text})}
                   value={reasons[form]}
                 />
                 </View>
@@ -258,7 +309,7 @@ export function LeaveFormScreen({ navigation }){
             {reasons[0] == null ? (<Text>no data</Text>) : renderClass()}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => alert('Submit')}
+              onPress={submitForm}
               style={styles.appButtonContainer}
             >
               <Text style={[styles.appButtonText,{width: Dimensions.get('screen').width/1.13}]}>Submit</Text>

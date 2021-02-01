@@ -4,6 +4,7 @@ import {
   Text,
   RefreshControl,
   ScrollView,
+  Dimensions,
   StyleSheet,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';

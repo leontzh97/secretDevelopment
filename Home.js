@@ -22,8 +22,8 @@ function MyTopTabs() {
         tabBarLabel: 'Leave Application',
       }}/>
       <TopTab.Screen name="LeaveDisplayScreen" component={LeaveDisplayScreen} options={
-        {tabBarLabel: 'Leave Submission'}
-      } />
+        {tabBarLabel: 'My Leave History'}
+      }/>
     </TopTab.Navigator>
   );
 }

@@ -83,19 +83,19 @@ export class Me extends Component {
           </Text>
         </View>
         <View style={styles.footer}>
-        <TouchableOpacity onPress={() => alert('Password page')}>
+        <TouchableOpacity onPress={() => alert('Achivements page')}>
           <View style={[styles.button,{borderTopWidth:1}]}>
             <Text style={styles.buttonText}>
-              <MaterialCommunityIcons name="security" size={20} color="white"/>
-              Change Password
+              <MaterialCommunityIcons name="trophy" size={20} color="white"/>
+              Achivements
             </Text>
           </View>
         </TouchableOpacity>
-          <TouchableOpacity onPress={() => alert('Membership page')}>
+          <TouchableOpacity onPress={() => alert('My training page')}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>
                 <MaterialCommunityIcons name="account" size={20} color="white"/>
-                Membership
+                My Training
               </Text>
             </View>
           </TouchableOpacity>

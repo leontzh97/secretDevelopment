@@ -62,13 +62,6 @@ export class GoogleLogin extends Component{
           onPress={() => this.signInWithGoogleAsync()}>
           <Text style={styles.loginText}>GOOGLE LOGIN</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.loginBtn}
-          onPress={() => this.state.navigation.navigate('MyTabs', {
-            screen: 'MyTabs'
-          })}>
-          <Text style={styles.loginText}>GUEST LOGIN</Text>
-        </TouchableOpacity>
       </View>
     )
   }

@@ -175,7 +175,7 @@ export function LeaveFormScreen({ navigation }){
     }
   }
 
-  const renderClass = () => {
+  const renderForm = () => {
     const fields = [];
     for (let i=0; i < form; i++) {
         let num = i+1;
@@ -333,7 +333,7 @@ export function LeaveFormScreen({ navigation }){
         {form == 0 ? (<View></View>):
           <View style={styles.action}>
             <Text style={styles.title}>Applied Leave</Text>
-              {renderClass()}
+              {renderForm()}
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={submitForm}

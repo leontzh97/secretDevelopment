@@ -7,6 +7,7 @@ import {
   Dimensions,
   Image,
   TouchableHighlight,
+  StatusBar,
   TouchableOpacity
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -69,6 +70,7 @@ export class Me extends Component {
   render(){
     return (
       <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
         <View style={styles.header}>
           <TouchableHighlight
               style={styles.logoImgContainer}>

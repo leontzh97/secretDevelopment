@@ -6,6 +6,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Dimensions,
+  StatusBar,
   StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -82,6 +83,7 @@ export function LeaveDisplayScreen(){
 
   return(
     <View style={styles.container}>
+    <StatusBar barStyle="light-content" />
     <ScrollView contentContainerStyle={styles.contentContainer}>
       {data == null ? (
         <View style={styles.activity}><ActivityIndicator size="large" color="black" /></View>

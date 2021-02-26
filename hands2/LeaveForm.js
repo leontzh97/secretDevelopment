@@ -216,8 +216,8 @@ export function LeaveFormScreen({ navigation }){
 
   return (
       <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
         <ScrollView>
-        <StatusBar barStyle="light-content" />
         <View style={[styles.action, { alignItems: "center" }]} >
           <Image source={require('../assets/handsLogo.jpg')} style={styles.logo} />
           <Text style={styles.actionTxt}>Hands 2 Leave Application</Text>
